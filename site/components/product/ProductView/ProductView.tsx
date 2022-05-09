@@ -1,7 +1,7 @@
 import cn from 'clsx'
 import Image from 'next/image'
 import s from './ProductView.module.css'
-import { FC } from 'react'
+import { FC, MouseEventHandler } from 'react'
 import type { Product } from '@commerce/types/product'
 import usePrice from '@framework/product/use-price'
 import { WishlistButton } from '@components/wishlist'
@@ -10,6 +10,8 @@ import { Container, Text } from '@components/ui'
 import { SEO } from '@components/common'
 import ProductSidebar from '../ProductSidebar'
 import ProductTag from '../ProductTag'
+import { trackProductView } from 'segmentIntegration/apiCalls'
+
 interface ProductViewProps {
   product: Product
   relatedProducts: Product[]
@@ -23,7 +25,7 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
   })
 
   return (
-    <>
+    <div onClick={() => trackProductView(product)}>
       <Container className="max-w-none w-full" clean>
         <div className={cn(s.root, 'fit')}>
           <div className={cn(s.main, 'fit')}>
@@ -106,7 +108,7 @@ const ProductView: FC<ProductViewProps> = ({ product, relatedProducts }) => {
           ],
         }}
       />
-    </>
+    </div>
   )
 }
 
