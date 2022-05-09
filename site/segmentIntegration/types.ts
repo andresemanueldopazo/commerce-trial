@@ -7,7 +7,7 @@ export type Customer = {
   email: string
 }
 
-// This allows to pass a subset of Costumer and return a Costumer object.
+// This allows to pass a subset of Customer and return a Customer object.
 export function mkCustomer({
   id = "",
   firstName = "",
