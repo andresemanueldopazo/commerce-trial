@@ -3,6 +3,7 @@ import * as Checkout from './checkout'
 import * as Common from './common'
 import * as Customer from './customer'
 import * as Login from './login'
+import * as GoogleLogin from './google-login'
 import * as Logout from './logout'
 import * as Page from './page'
 import * as Product from './product'
@@ -16,6 +17,7 @@ export type {
   Common,
   Customer,
   Login,
+  GoogleLogin,
   Logout,
   Page,
   Product,

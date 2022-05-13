@@ -884,6 +884,25 @@
   resolved "https://registry.yarnpkg.com/@n1ru4l/graphql-live-query/-/graphql-live-query-0.9.0.tgz#defaebdd31f625bee49e6745934f36312532b2bc"
   integrity sha512-BTpWy1e+FxN82RnLz4x1+JcEewVdfmUhV1C6/XYD5AjS7PQp9QFF7K8bCD6gzPTr2l+prvqOyVueQhFJxB1vfg==
 
+"@ndhoule/each@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@ndhoule/each/-/each-2.0.1.tgz#bbed372a603e0713a3193c706a73ddebc5b426a9"
+  integrity sha1-u+03KmA+BxOjGTxwanPd68W0Jqk=
+  dependencies:
+    "@ndhoule/keys" "^2.0.0"
+
+"@ndhoule/keys@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@ndhoule/keys/-/keys-2.0.0.tgz#3d64ae677c65a261747bf3a457c62eb292a4e0ce"
+  integrity sha1-PWSuZ3xlomF0e/OkV8YuspKk4M4=
+
+"@ndhoule/map@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@ndhoule/map/-/map-2.0.1.tgz#f5ca0a47424ea67f46e2a6d499b9e9bc886aefa8"
+  integrity sha1-9coKR0JOpn9G4qbUmbnpvIhq76g=
+  dependencies:
+    "@ndhoule/each" "^2.0.1"
+
 "@next/bundle-analyzer@^12.0.8":
   version "12.0.8"
   resolved "https://registry.yarnpkg.com/@next/bundle-analyzer/-/bundle-analyzer-12.0.8.tgz#a4fef1b14f8a4a87c09d97a3d909deddc88d12f8"
@@ -1301,6 +1320,13 @@
   integrity sha512-c/qwwcHyafOQuVQJj0IlBjf5yYgBI7YPJ77k4fOJYesb41jio65eaJODRUmfYKhTOFBrIZ66kgvGPlNbjuoRdQ==
   dependencies:
     any-observable "^0.3.0"
+
+"@segment/snippet@^4.15.3":
+  version "4.15.3"
+  resolved "https://registry.yarnpkg.com/@segment/snippet/-/snippet-4.15.3.tgz#ac829ec4570b249f559756293f4736e434885de7"
+  integrity sha512-75kVTYaQGYMkwVjJvCLLOlzxV8jCDxvKG68U88joo/rBx95SIXETcjUmIXF6A7SFRCgz83B+zrZbo+JYsmHkig==
+  dependencies:
+    "@ndhoule/map" "^2.0.1"
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
@@ -3084,6 +3110,11 @@ eslint-plugin-react-hooks@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.3.0.tgz#318dbf312e06fab1c835a4abef00121751ac1172"
   integrity sha512-XslZy0LnMn+84NEG9jSGR6eGqaZB3133L8xewQo3fQagbQuGt7a63gf+P1NGKZavEYEC3UXaWEAA/AqDkuN6xA==
+
+eslint-plugin-react-hooks@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.5.0.tgz#5f762dfedf8b2cf431c689f533c9d3fa5dcf25ad"
+  integrity sha512-8k1gRt7D7h03kd+SAAlzXkQwWK22BnK6GKZG+FJA6BAGy22CFvl8kCIXKpVux0cCxMWDQUPqSok0LKaZ0aOcCw==
 
 eslint-plugin-react@^7.27.0:
   version "7.28.0"
