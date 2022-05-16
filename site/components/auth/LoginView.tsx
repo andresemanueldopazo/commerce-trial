@@ -5,11 +5,6 @@ import useGoogleLogin from '@framework/auth/use-google-login'
 import { useUI } from '@components/ui/context'
 import { validate } from 'email-validator'
 import GoogleLogin from 'react-google-login';
-import { identifyCustomer } from 'segmentIntegration/apiCalls'
-import { Customer, mkCustomer } from 'segmentIntegration/types'
-import { CustomerInfoContext } from 'segmentIntegration/CustomerInfoContext'
-
-const identifyCustomerLogin = identifyCustomer("Customer logged in");
 
 const LoginView: React.FC = () => {
   // Form State
@@ -24,7 +19,7 @@ const LoginView: React.FC = () => {
   const login = useLogin()
   const googleLogin = useGoogleLogin()
 
-  const handleLogin = async (e: React.SyntheticEvent<EventTarget>, customer: Customer | undefined) => {
+  const handleLogin = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
 
     if (!dirty && !disabled) {
@@ -40,10 +35,10 @@ const LoginView: React.FC = () => {
         password,
       })
       setLoading(false)
-      identifyCustomerLogin(mkCustomer({ email }))
       closeModal()
     } catch (e: any) {
-      setMessage(e.errors[0].message)
+      //setMessage(e.errors[0].message) DOES NOT WORK
+      console.log("Error: ", e)
       setLoading(false)
       setDisabled(false)
     }
@@ -56,7 +51,6 @@ const LoginView: React.FC = () => {
       google: response.tokenId,
     })
     setLoading(false)
-    identifyCustomerLogin(mkCustomer({ email }))
     closeModal()
   }
 
@@ -81,61 +75,57 @@ const LoginView: React.FC = () => {
   }, [handleValidation])
 
   return (
-    <CustomerInfoContext.Consumer>
-      {(customer: Customer | undefined) => (
-        <div>
-          <GoogleLogin
-            clientId="544188497430-sqn1tr00nd4uvthmbqo95trcjjibp8j2.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={handleOnSuccessGoogleLogin}
-            onFailure={handleOnFailureGoogleLogin}
-            cookiePolicy={'single_host_origin'}
-          />
-          <form
-            onSubmit={(e) => handleLogin(e, customer)}
-            className="w-80 flex flex-col justify-between p-3"
-          >
-            <div className="flex justify-center pb-12 ">
-              <Logo width="64px" height="64px" />
-            </div>
-            <div className="flex flex-col space-y-3">
-              {message && (
-                <div className="text-red border border-red p-3">
-                  {message}. Did you {` `}
-                  <a
-                    className="text-accent-9 inline font-bold hover:underline cursor-pointer"
-                    onClick={() => setModalView('FORGOT_VIEW')}
-                  >
-                    forgot your password?
-                  </a>
-                </div>
-              )}
-              <Input type="email" placeholder="Email" onChange={setEmail} />
-              <Input type="password" placeholder="Password" onChange={setPassword} />
-
-              <Button
-                variant="slim"
-                type="submit"
-                loading={loading}
-                disabled={disabled}
-              >
-                Log In
-              </Button>
-              <div className="pt-1 text-center text-sm">
-                <span className="text-accent-7">Don't have an account?</span>
-                {` `}
-                <a
-                  className="text-accent-9 font-bold hover:underline cursor-pointer"
-                  onClick={() => setModalView('SIGNUP_VIEW')}
-                >
-                  Sign Up
-                </a>
-              </div>
-            </div>
-          </form>
+    <div>
+      <GoogleLogin
+        clientId="544188497430-sqn1tr00nd4uvthmbqo95trcjjibp8j2.apps.googleusercontent.com"
+        buttonText="Login"
+        onSuccess={handleOnSuccessGoogleLogin}
+        onFailure={handleOnFailureGoogleLogin}
+        cookiePolicy={'single_host_origin'}
+      />
+      <form
+        onSubmit={handleLogin}
+        className="w-80 flex flex-col justify-between p-3"
+      >
+        <div className="flex justify-center pb-12 ">
+          <Logo width="64px" height="64px" />
         </div>
-      )}
-    </CustomerInfoContext.Consumer>
+        <div className="flex flex-col space-y-3">
+          {message && (
+            <div className="text-red border border-red p-3">
+              {message}. Did you {` `}
+              <a
+                className="text-accent-9 inline font-bold hover:underline cursor-pointer"
+                onClick={() => setModalView('FORGOT_VIEW')}
+              >
+                forgot your password?
+              </a>
+            </div>
+          )}
+          <Input type="email" placeholder="Email" onChange={setEmail} />
+          <Input type="password" placeholder="Password" onChange={setPassword} />
+
+          <Button
+            variant="slim"
+            type="submit"
+            loading={loading}
+            disabled={disabled}
+          >
+            Log In
+          </Button>
+          <div className="pt-1 text-center text-sm">
+            <span className="text-accent-7">Don't have an account?</span>
+            {` `}
+            <a
+              className="text-accent-9 font-bold hover:underline cursor-pointer"
+              onClick={() => setModalView('SIGNUP_VIEW')}
+            >
+              Sign Up
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
   )
 }
 

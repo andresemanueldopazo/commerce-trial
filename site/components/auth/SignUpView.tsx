@@ -6,8 +6,7 @@ import { Logo, Button, Input } from '@components/ui'
 import useSignup from '@framework/auth/use-signup'
 
 import { identifyCustomer } from 'segmentIntegration/apiCalls'
-import { Customer, mkCustomer } from 'segmentIntegration/types'
-import { CustomerInfoContext } from 'segmentIntegration/CustomerInfoContext'
+import { mkCustomer } from 'segmentIntegration/types'
 
 const identifyCustomerSignUp = identifyCustomer("Customer signed up");
 
@@ -27,7 +26,7 @@ const SignUpView: FC<Props> = () => {
   const signup = useSignup()
   const { setModalView, closeModal } = useUI()
 
-  const handleSignup = async (e: React.SyntheticEvent<EventTarget>, customer: Customer | undefined) => {
+  const handleSignup = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
 
     if (!dirty && !disabled) {
@@ -69,57 +68,53 @@ const SignUpView: FC<Props> = () => {
   }, [handleValidation])
 
   return (
-    <CustomerInfoContext.Consumer>
-      {(customer: Customer | undefined) => (
-        <form
-          onSubmit={(e) => handleSignup(e, customer)}
-          className="w-80 flex flex-col justify-between p-3"
-        >
-          <div className="flex justify-center pb-12 ">
-            <Logo width="64px" height="64px" />
-          </div>
-          <div className="flex flex-col space-y-4">
-            {message && (
-              <div className="text-red border border-red p-3">{message}</div>
-            )}
-            <Input placeholder="First Name" onChange={setFirstName} />
-            <Input placeholder="Last Name" onChange={setLastName} />
-            <Input type="email" placeholder="Email" onChange={setEmail} />
-            <Input type="password" placeholder="Password" onChange={setPassword} />
-            <span className="text-accent-8">
-              <span className="inline-block align-middle ">
-                <Info width="15" height="15" />
-              </span>{' '}
-              <span className="leading-6 text-sm">
-                <strong>Info</strong>: Passwords must be longer than 7 chars and
-                include numbers.{' '}
-              </span>
-            </span>
-            <div className="pt-2 w-full flex flex-col">
-              <Button
-                variant="slim"
-                type="submit"
-                loading={loading}
-                disabled={disabled}
-              >
-                Sign Up
-              </Button>
-            </div>
+    <form
+      onSubmit={handleSignup}
+      className="w-80 flex flex-col justify-between p-3"
+    >
+      <div className="flex justify-center pb-12 ">
+        <Logo width="64px" height="64px" />
+      </div>
+      <div className="flex flex-col space-y-4">
+        {message && (
+          <div className="text-red border border-red p-3">{message}</div>
+        )}
+        <Input placeholder="First Name" onChange={setFirstName} />
+        <Input placeholder="Last Name" onChange={setLastName} />
+        <Input type="email" placeholder="Email" onChange={setEmail} />
+        <Input type="password" placeholder="Password" onChange={setPassword} />
+        <span className="text-accent-8">
+          <span className="inline-block align-middle ">
+            <Info width="15" height="15" />
+          </span>{' '}
+          <span className="leading-6 text-sm">
+            <strong>Info</strong>: Passwords must be longer than 7 chars and
+            include numbers.{' '}
+          </span>
+        </span>
+        <div className="pt-2 w-full flex flex-col">
+          <Button
+            variant="slim"
+            type="submit"
+            loading={loading}
+            disabled={disabled}
+          >
+            Sign Up
+          </Button>
+        </div>
 
-            <span className="pt-1 text-center text-sm">
-              <span className="text-accent-7">Do you have an account?</span>
-              {` `}
-              <a
-                className="text-accent-9 font-bold hover:underline cursor-pointer"
-                onClick={() => setModalView('LOGIN_VIEW')}
-              >
-                Log In
-              </a>
-            </span>
-          </div>
-        </form>
-      )}
-    </CustomerInfoContext.Consumer>
+        <span className="pt-1 text-center text-sm">
+          <span className="text-accent-7">Do you have an account?</span>
+          {` `}
+          <a
+            className="text-accent-9 font-bold hover:underline cursor-pointer"
+            onClick={() => setModalView('LOGIN_VIEW')}
+          >
+            Log In
+          </a>
+        </span>
+      </div>
+    </form>
   )
 }
 
