@@ -6,6 +6,7 @@ import { CommerceError, ValidationError } from '@vercel/commerce/utils/errors'
 import useCustomer from '../customer/use-customer'
 import { LoginMutation, LoginMutationVariables } from '../../schema'
 import { loginMutation } from '../utils/mutations/log-in-mutation'
+import { identifyCustomer } from '../../../../site/segmentIntegration/apiCalls'
 
 export default useLogin as UseLogin<typeof handler>
 
@@ -44,7 +45,8 @@ export const handler: MutationHook<LoginHook> = {
       return useCallback(
         async function login(input) {
           const data = await fetch({ input })
-          await mutate()
+          const userData = await mutate()
+          identifyCustomer({...userData, id: userData.email})
           return data
         },
         [fetch, mutate]
