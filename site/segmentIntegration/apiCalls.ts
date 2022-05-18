@@ -9,10 +9,9 @@ export const identifyCustomer = (customer: Customer) => {
 }
 
 export const trackProductView = (p: Product) => {
-  (window as any).analytics.track(`${p.name} viewed`, {
-    event: "view product",
-    productId: p.id,
-    productName: p.name,
-    productPrice: p.price,
+  (window as any).analytics.track(`Product Viewed`, {
+    product_id: p.id,
+    name: p.name,
+    price: p.price,
   })
 }
