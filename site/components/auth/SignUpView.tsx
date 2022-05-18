@@ -5,11 +5,6 @@ import { useUI } from '@components/ui/context'
 import { Logo, Button, Input } from '@components/ui'
 import useSignup from '@framework/auth/use-signup'
 
-import { identifyCustomer } from 'segmentIntegration/apiCalls'
-import { mkCustomer } from 'segmentIntegration/types'
-
-const identifyCustomerSignUp = identifyCustomer("Customer signed up");
-
 interface Props {}
 
 const SignUpView: FC<Props> = () => {
@@ -43,7 +38,6 @@ const SignUpView: FC<Props> = () => {
         lastName,
         password,
       })
-      identifyCustomerSignUp(mkCustomer({ firstName, lastName, email }))
       setLoading(false)
       closeModal()
     } catch ({ errors }) {
