@@ -1,8 +1,7 @@
 import { Customer, Product } from './types'
 
-export const identifyCustomer = (msg: string) => (customer: Customer) => {
-  (window as any).analytics.identify(msg, {
-    id: customer.id,
+export const identifyCustomer = (customer: Customer) => {
+  (window as any).analytics.identify(customer.id, {
     firstName: customer.firstName,
     lastName: customer.lastName,
     email: customer.email,
