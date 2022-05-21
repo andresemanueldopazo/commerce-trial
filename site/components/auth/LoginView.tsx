@@ -5,6 +5,8 @@ import useGoogleLogin from '@framework/auth/use-google-login'
 import { useUI } from '@components/ui/context'
 import { validate } from 'email-validator'
 import GoogleLogin from 'react-google-login';
+import FacebookLogin from "react-facebook-login";
+import useFacebookLogin from '@framework/auth/use-facebook-login'
 
 const LoginView: React.FC = () => {
   // Form State
@@ -18,10 +20,11 @@ const LoginView: React.FC = () => {
 
   const login = useLogin()
   const googleLogin = useGoogleLogin()
-
+  const facebookLogin = useFacebookLogin()
+  
   const handleLogin = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
-
+    
     if (!dirty && !disabled) {
       setDirty(true)
       handleValidation()
@@ -43,24 +46,9 @@ const LoginView: React.FC = () => {
       setDisabled(false)
     }
   }
-
-  const handleOnSuccessGoogleLogin = async (response: any) => {
-    setLoading(true)
-    setMessage('')
-    await googleLogin({
-      google: response.tokenId,
-    })
-    setLoading(false)
-    closeModal()
-  }
-
-  const handleOnFailureGoogleLogin = async (response: any) => {
-    setMessage(response.message)
-    setLoading(false)
-    setDisabled(false)
-  }
-
+  
   const handleValidation = useCallback(() => {
+    console.log("entro a valideitor")
     // Test for Alphanumeric password
     const validPassword = /^(?=.*[a-zA-Z])(?=.*[0-9])/.test(password)
 
@@ -74,15 +62,28 @@ const LoginView: React.FC = () => {
     handleValidation()
   }, [handleValidation])
 
+  const handleOnSuccessGoogleLogin = async (response: any) => {
+    await googleLogin({
+      google: response.tokenId,
+    })
+    closeModal()
+  }
+
+  const handleOnFailureGoogleLogin = async (response: any) => {
+  }
+
+  const responseFacebook = async (response: any) => {
+    if (response.status === "unknown" || !(response.accessToken)) {
+      return
+    }
+    await facebookLogin({
+      facebook: response.accessToken,
+    })
+    closeModal()
+  }
+
   return (
-    <div>
-      <GoogleLogin
-        clientId="544188497430-sqn1tr00nd4uvthmbqo95trcjjibp8j2.apps.googleusercontent.com"
-        buttonText="Login"
-        onSuccess={handleOnSuccessGoogleLogin}
-        onFailure={handleOnFailureGoogleLogin}
-        cookiePolicy={'single_host_origin'}
-      />
+    <>
       <form
         onSubmit={handleLogin}
         className="w-80 flex flex-col justify-between p-3"
@@ -125,7 +126,26 @@ const LoginView: React.FC = () => {
           </div>
         </div>
       </form>
-    </div>
+      <div className="flex justify-center">
+        <GoogleLogin
+          clientId="544188497430-sqn1tr00nd4uvthmbqo95trcjjibp8j2.apps.googleusercontent.com"
+          buttonText="Login"
+          onSuccess={handleOnSuccessGoogleLogin}
+          onFailure={handleOnFailureGoogleLogin}
+          cookiePolicy={'single_host_origin'}
+        />
+      </div>
+      <div className="flex justify-center p-3">
+        <FacebookLogin
+          appId="737706794329623"
+          fields="name,email,picture"
+          scope="public_profile,email,user_friends"
+          callback={responseFacebook}
+          icon="fa-facebook"
+          size= 'medium'
+        />
+      </div>
+    </>
   )
 }
 
