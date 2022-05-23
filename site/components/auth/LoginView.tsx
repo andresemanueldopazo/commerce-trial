@@ -48,7 +48,6 @@ const LoginView: React.FC = () => {
   }
   
   const handleValidation = useCallback(() => {
-    console.log("entro a valideitor")
     // Test for Alphanumeric password
     const validPassword = /^(?=.*[a-zA-Z])(?=.*[0-9])/.test(password)
 
@@ -137,7 +136,7 @@ const LoginView: React.FC = () => {
       </div>
       <div className="flex justify-center p-3">
         <FacebookLogin
-          appId="737706794329623"
+          appId="728618198326306"
           fields="name,email,picture"
           scope="public_profile,email,user_friends"
           callback={responseFacebook}
