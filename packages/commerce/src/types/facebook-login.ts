@@ -1,7 +1,5 @@
 export type FacebookLoginBody = {
-  facebook: {
-    token: string
-  }
+  token: string
 }
 
 export type FacebookLoginTypes = {
