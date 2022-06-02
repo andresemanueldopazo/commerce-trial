@@ -4,7 +4,7 @@ export interface Address {
 }
 
 export interface AddressFields {
-  type: string
+  // type: string
   firstName: string
   lastName: string
   company: string

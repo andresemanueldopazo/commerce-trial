@@ -41,7 +41,7 @@ For example: Turning `cart` off will disable Cart capabilities.
 - Turn `wishlist` on by setting `wishlist` to `true`.
 - Run the app and the wishlist functionality should be back on.
 
-## After run
+## Requirements
 
 1. Install [mkcert](https://github.com/FiloSottile/mkcert#installation)
 2. Generate a CA i.e Certificate Authority: `mkcert -install`

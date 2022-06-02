@@ -9,7 +9,6 @@ import { useCallback } from 'react'
 import { setOrderBillingAddress } from '../../utils/mutations/set-order-billing-address'
 import {
   ActiveOrderResult,
-  EligibleShippingMethodsQuery,
   MutationSetOrderBillingAddressArgs,
   SetOrderShippingMethodResult,
 } from '../../../schema'
@@ -40,7 +39,7 @@ export const handler: MutationHook<AddItemHook> = {
       ...options,
       variables,
     })
-    const eligibleMethods = await fetch<EligibleShippingMethodsQuery>({
+    const eligibleMethods = await fetch({
       ...options,
       query: eligibleShippingMethods,
     })

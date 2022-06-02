@@ -9,6 +9,12 @@ import { handler as useGoogleLogin } from './auth/use-google-login'
 import { handler as useFacebookLogin } from './auth/use-facebook-login'
 import { handler as useLogout } from './auth/use-logout'
 import { handler as useSignup } from './auth/use-signup'
+import { handler as useCheckout } from './checkout/use-checkout'
+import { handler as useSubmitCheckout } from './checkout/use-submit-checkout'
+import { handler as useCards } from './customer/card/use-cards'
+import { handler as useAddCardItem } from './customer/card/use-add-item'
+import { handler as useAddresses } from './customer/address/use-addresses'
+import { handler as useAddAddressItem } from './customer/address/use-add-item'
 import { fetcher } from './fetcher'
 
 export const vendureProvider = {
@@ -16,9 +22,23 @@ export const vendureProvider = {
   cartCookie: 'session',
   fetcher,
   cart: { useCart, useAddItem, useUpdateItem, useRemoveItem },
-  customer: { useCustomer },
+  customer: {
+    useCustomer,
+    card: {
+      useCards,
+      useAddItem: useAddCardItem,
+    },
+    address: {
+      useAddresses,
+      useAddItem: useAddAddressItem,
+    },
+  },
   products: { useSearch },
-  auth: { useLogin, useGoogleLogin, useFacebookLogin, useLogout, useSignup },
+  checkout: {
+    useCheckout,
+    useSubmitCheckout,
+  },
+  auth: { useLogin, useLogout, useGoogleLogin, useFacebookLogin, useSignup },
 }
 
 export type VendureProvider = typeof vendureProvider

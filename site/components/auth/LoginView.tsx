@@ -1,11 +1,10 @@
-import { FC, useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { Logo, Button, Input } from '@components/ui'
 import useLogin from '@framework/auth/use-login'
 import useGoogleLogin from '@framework/auth/use-google-login'
 import { useUI } from '@components/ui/context'
 import { validate } from 'email-validator'
-import GoogleLogin from 'react-google-login';
-import FacebookLogin from "react-facebook-login";
+import {useGoogleLogin as useGoogleLoginHook} from 'react-google-login';
 import useFacebookLogin from '@framework/auth/use-facebook-login'
 
 const LoginView: React.FC = () => {
@@ -60,18 +59,29 @@ const LoginView: React.FC = () => {
   useEffect(() => {
     handleValidation()
   }, [handleValidation])
-
-  const handleOnSuccessGoogleLogin = async (response: any) => {
+  
+  const onSuccessGoogleLogin = async (response: any) => {
     await googleLogin({
       google: response.tokenId,
     })
     closeModal()
   }
 
-  const handleOnFailureGoogleLogin = async (response: any) => {
+  const onFailureGoogleLogin = async (response: any) => {
   }
 
+  const {signIn} = useGoogleLoginHook({
+    clientId: "544188497430-sqn1tr00nd4uvthmbqo95trcjjibp8j2.apps.googleusercontent.com",
+    onSuccess: onSuccessGoogleLogin,
+    onFailure: onFailureGoogleLogin,
+    accessType: 'offline',
+    autoLoad: false,
+  })
+
+
+
   const responseFacebook = async (response: any) => {
+    console.log(response)
     if (response.status === "unknown" || !(response.accessToken)) {
       return
     }
@@ -125,24 +135,17 @@ const LoginView: React.FC = () => {
           </div>
         </div>
       </form>
-      <div className="flex justify-center">
-        <GoogleLogin
-          clientId="544188497430-sqn1tr00nd4uvthmbqo95trcjjibp8j2.apps.googleusercontent.com"
-          buttonText="Login"
-          onSuccess={handleOnSuccessGoogleLogin}
-          onFailure={handleOnFailureGoogleLogin}
-          cookiePolicy={'single_host_origin'}
-        />
-      </div>
-      <div className="flex justify-center p-3">
-        <FacebookLogin
-          appId="728618198326306"
-          fields="name,email,picture"
-          scope="public_profile,email,user_friends"
-          callback={responseFacebook}
-          icon="fa-facebook"
-          size= 'medium'
-        />
+      <div className="w-80 flex flex-col justify-between p-3">
+        <Button
+          variant="slim"
+          type="submit"
+          loading={loading}
+          disabled={disabled}
+          onClick={signIn}
+          className="flex justify-center p-3"
+        >
+          Log In with Google
+        </Button>
       </div>
     </>
   )

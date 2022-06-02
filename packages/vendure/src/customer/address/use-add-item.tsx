@@ -5,12 +5,15 @@ import type { AddItemHook } from '@vercel/commerce/types/customer/address'
 import { CommerceError } from '@vercel/commerce/utils/errors'
 import type { MutationHook } from '@vercel/commerce/utils/types'
 import { useCallback } from 'react'
+import { eligibleShippingMethods } from '../../utils/queries/eligible-shipping-methods'
+import { setOrderShippingMethod } from '../../utils/mutations/set-order-shipping-method'
 import {
   ActiveOrderResult,
-  MutationSetOrderShippingAddressArgs
+  MutationSetOrderShippingAddressArgs,
+  Order,
+  SetOrderShippingMethodResult
 } from '../../../schema'
 import { setOrderShippingAddress } from '../../utils/mutations/set-order-shipping-address'
-import { normalizeAddress } from '../../utils/normalize'
 import useAddresses from './use-addresses'
 
 
@@ -33,17 +36,39 @@ export const handler: MutationHook<AddItemHook> = {
         countryCode: 'JP',
       },
     }
-    const data = await fetch<ActiveOrderResult>({
+    const response = await fetch({
       ...options,
       variables,
     })
+    const data = response.setOrderShippingAddress
+
+    const eligibleMethods = await fetch({
+      ...options,
+      query: eligibleShippingMethods,
+    })
+    console.log(eligibleMethods)
+    const shippingMethodId =
+      eligibleMethods?.['eligibleShippingMethods']?.[0].id
+    if (shippingMethodId) {
+      await fetch<SetOrderShippingMethodResult>({
+        ...options,
+        query: setOrderShippingMethod,
+        variables: {
+          shippingMethodId,
+        },
+      })
+    }
+    console.log(data.__typename)
     if (data.__typename === 'Order') {
-      return normalizeAddress(data)
+      return data
     } else if (data.__typename === 'NoActiveOrderError') {
       throw new CommerceError({
         code: data.errorCode,
         message: data.message,
       })
+    }
+    else {
+      throw new Error()
     }
   },
   useHook: ({ fetch }) =>

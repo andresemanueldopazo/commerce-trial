@@ -14,8 +14,7 @@ const fn = (provider: Provider) => provider.auth?.useLogin!
 
 const useLogin: UseLogin = (...args) => {
   const hook = useHook(fn)
-  const result = useMutationHook({ fetcher, ...hook })(...args)
-  return result
+  return useMutationHook({ fetcher, ...hook })(...args)
 }
 
 export default useLogin

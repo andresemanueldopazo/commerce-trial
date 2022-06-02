@@ -23,14 +23,14 @@ interface Form extends HTMLFormElement {
 }
 
 const ShippingView: FC = () => {
-  const { setSidebarView } = useUI()
+  const { setSidebarView, closeSidebar } = useUI()
   const addAddress = useAddAddress()
 
   async function handleSubmit(event: React.ChangeEvent<Form>) {
     event.preventDefault()
 
     await addAddress({
-      type: event.target.type.value,
+      // type: event.target.type.value,
       firstName: event.target.firstName.value,
       lastName: event.target.lastName.value,
       company: event.target.company.value,
@@ -46,22 +46,12 @@ const ShippingView: FC = () => {
 
   return (
     <form className="h-full" onSubmit={handleSubmit}>
-      <SidebarLayout handleBack={() => setSidebarView('CHECKOUT_VIEW')}>
+      <SidebarLayout handleBack={() => setSidebarView('CART_VIEW')}>
         <div className="px-4 sm:px-6 flex-1">
-          <h2 className="pt-1 pb-8 text-2xl font-semibold tracking-wide cursor-pointer inline-block">
+          <h2 className="pt-1 stickypb-8 text-2xl font-semibold tracking-wide cursor-pointer inline-block">
             Shipping
           </h2>
           <div>
-            <div className="flex flex-row my-3 items-center">
-              <input name="type" className={s.radio} type="radio" />
-              <span className="ml-3 text-sm">Same as billing address</span>
-            </div>
-            <div className="flex flex-row my-3 items-center">
-              <input name="type" className={s.radio} type="radio" />
-              <span className="ml-3 text-sm">
-                Use a different shipping address
-              </span>
-            </div>
             <hr className="border-accent-2 my-6" />
             <div className="grid gap-3 grid-flow-row grid-cols-12">
               <div className={cn(s.fieldset, 'col-span-6')}>
@@ -105,8 +95,8 @@ const ShippingView: FC = () => {
             </div>
           </div>
         </div>
-        <div className="sticky z-20 bottom-0 w-full right-0 left-0 py-12 bg-accent-0 border-t border-accent-2 px-6">
-          <Button type="submit" width="100%" variant="ghost">
+        <div className=" z-20 bottom-0 w-full right-0 left-0 py-12 bg-accent-0 border-t border-accent-2 px-6">
+          <Button type="submit" width="100%">
             Continue
           </Button>
         </div>
