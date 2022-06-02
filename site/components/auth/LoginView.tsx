@@ -5,6 +5,7 @@ import useGoogleLogin from '@framework/auth/use-google-login'
 import { useUI } from '@components/ui/context'
 import { validate } from 'email-validator'
 import {useGoogleLogin as useGoogleLoginHook} from 'react-google-login';
+import FacebookLogin, { LoginResponse } from '@greatsumini/react-facebook-login';
 import useFacebookLogin from '@framework/auth/use-facebook-login'
 
 const LoginView: React.FC = () => {
@@ -20,10 +21,10 @@ const LoginView: React.FC = () => {
   const login = useLogin()
   const googleLogin = useGoogleLogin()
   const facebookLogin = useFacebookLogin()
-  
+
   const handleLogin = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
-    
+
     if (!dirty && !disabled) {
       setDirty(true)
       handleValidation()
@@ -45,7 +46,7 @@ const LoginView: React.FC = () => {
       setDisabled(false)
     }
   }
-  
+
   const handleValidation = useCallback(() => {
     // Test for Alphanumeric password
     const validPassword = /^(?=.*[a-zA-Z])(?=.*[0-9])/.test(password)
@@ -79,16 +80,15 @@ const LoginView: React.FC = () => {
   })
 
 
-
-  const responseFacebook = async (response: any) => {
-    console.log(response)
-    if (response.status === "unknown" || !(response.accessToken)) {
-      return
+  const handleOnSuccessFacebook = async (response: LoginResponse['authResponse']) => {
+    if (!!response) {
+      await facebookLogin({
+          token: response.accessToken,
+        })
+        closeModal()
+    } else {
+      console.log("Facebook authentication failed!")
     }
-    await facebookLogin({
-      facebook: response.accessToken,
-    })
-    closeModal()
   }
 
   return (
@@ -146,6 +146,24 @@ const LoginView: React.FC = () => {
         >
           Log In with Google
         </Button>
+      </div>
+      <div className="flex justify-center p-3">
+        <FacebookLogin
+          appId="733157791465173"
+          fields="name,email,picture"
+          scope="public_profile,email,user_friends"
+          onSuccess={handleOnSuccessFacebook}
+          onFail={(e: {status: string}) => console.log("FB login failed:", e.status)}
+          style={{
+            backgroundColor: '#4267b2',
+            color: '#fff',
+            fontSize: '16px',
+            padding: '12px 24px',
+            border: 'none',
+            borderRadius: '4px',
+            //backgroundImage: "" if we want the fb icon in the button... how do we make work this out?
+          }}
+        />
       </div>
     </>
   )
