@@ -42,23 +42,6 @@ export const handler: MutationHook<AddItemHook> = {
     })
     const data = response.setOrderShippingAddress
 
-    const eligibleMethods = await fetch({
-      ...options,
-      query: eligibleShippingMethods,
-    })
-    console.log(eligibleMethods)
-    const shippingMethodId =
-      eligibleMethods?.['eligibleShippingMethods']?.[0].id
-    if (shippingMethodId) {
-      await fetch<SetOrderShippingMethodResult>({
-        ...options,
-        query: setOrderShippingMethod,
-        variables: {
-          shippingMethodId,
-        },
-      })
-    }
-    console.log(data.__typename)
     if (data.__typename === 'Order') {
       return data
     } else if (data.__typename === 'NoActiveOrderError') {

@@ -5,8 +5,11 @@ import Button from '@components/ui/Button'
 import { useUI } from '@components/ui/context'
 import SidebarLayout from '@components/common/SidebarLayout'
 import useAddAddress from '@framework/customer/address/use-add-item'
-
+import useSWR from 'swr'
+import { fetcher as fetch } from '@framework/fetcher'
+import { eligibleShippingMethods } from '@framework/utils/queries/eligible-shipping-methods'
 import s from './ShippingView.module.css'
+import { setOrderShippingMethod } from '@framework/utils/mutations/set-order-shipping-method'
 
 interface Form extends HTMLFormElement {
   cardHolder: HTMLInputElement
@@ -26,8 +29,23 @@ const ShippingView: FC = () => {
   const { setSidebarView, closeSidebar } = useUI()
   const addAddress = useAddAddress()
 
+  const fetcher = async () => {
+      return await fetch({query: eligibleShippingMethods});
+  }
+  const { data, error } = useSWR('/eligibleShippingMethods', fetcher, {
+    revalidateOnFocus: false,
+  })
+
   async function handleSubmit(event: React.ChangeEvent<Form>) {
     event.preventDefault()
+    const response = await fetch({
+      query: setOrderShippingMethod,
+      variables: {
+        shippingMethodId: data.eligibleShippingMethods.filter(
+          (e: any) => e.name == (event.target.method as any).value
+        )[0].id
+      },
+    })
 
     await addAddress({
       // type: event.target.type.value,
@@ -52,7 +70,18 @@ const ShippingView: FC = () => {
             Shipping
           </h2>
           <div>
+            <div className={s.fieldset}>
+              <label className={s.label}>Shipping Method</label>
+              <select name="method" className={s.select}>
+                {data? (data!.eligibleShippingMethods.map((item: any) => (
+                    <option id={item.id}>{item.name}</option>
+                  ))) : null}
+              </select>
+            </div>
             <hr className="border-accent-2 my-6" />
+            <div className={s.fieldset}>
+              <label className={s.label}>Country/Region</label>
+            </div>
             <div className="grid gap-3 grid-flow-row grid-cols-12">
               <div className={cn(s.fieldset, 'col-span-6')}>
                 <label className={s.label}>First Name</label>
@@ -95,7 +124,7 @@ const ShippingView: FC = () => {
             </div>
           </div>
         </div>
-        <div className=" z-20 bottom-0 w-full right-0 left-0 py-12 bg-accent-0 border-t border-accent-2 px-6">
+        <div className="flex-shrink-0 px-6 py-6 sm:px-6 sticky z-20 bottom-0 w-full right-0 left-0 bg-accent-0 border-t text-sm">
           <Button type="submit" width="100%">
             Continue
           </Button>
