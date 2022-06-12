@@ -36,6 +36,7 @@ export function normalizeCart(order: CartFragment): Cart {
     subtotalPrice: order.subTotalWithTax / 100,
     totalPrice: order.totalWithTax / 100,
     customerId: order.customer?.id,
+    shippingWithTax: order.shippingWithTax,
     lineItems: order.lines?.map((l) => ({
       id: l.id,
       name: l.productVariant.name,

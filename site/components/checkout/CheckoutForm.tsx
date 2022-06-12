@@ -2,12 +2,34 @@ import React, {FC, useState} from 'react';
 import {useStripe, useElements, PaymentElement} from '@stripe/react-stripe-js';
 import { Button } from '@components/ui'
 import { Stripe } from '@stripe/stripe-js';
+import usePrice from '@framework/product/use-price';
+import { useCart } from '@framework/cart';
 
 const CheckoutForm: FC = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const { data } = useCart()
+
+  const { price: subTotal } = usePrice(
+    data && {
+      amount: Number(data.subtotalPrice),
+      currencyCode: data.currency.code,
+    }
+  )
+  const { price: total } = usePrice(
+    data && {
+      amount: Number(data.totalPrice),
+      currencyCode: data.currency.code,
+    }
+  )
+  const { price: shippingPrice } = usePrice(
+    data && {
+      amount: Number(data.shippingWithTax/100),
+      currencyCode: data.currency.code,
+    }
+  )
 
   const handleSubmit = async (event: { preventDefault: (arg0: Stripe | null) => void; }) => {
     // We don't want to let default form submission happen here,
@@ -43,13 +65,30 @@ const CheckoutForm: FC = () => {
     <form
       onSubmit={handleSubmit}
     >
-      <PaymentElement onReady={()=> setLoading(false)}/>
-      <div className="z-20 bottom-0 w-full right-0 left-0 py-12 bg-accent-0 border-t border-accent-2 px-6">
-        {!loading &&
+      <div className="px-4 sm:px-6 flex-1">
+        <ul className="pb-2">
+          <li className="flex justify-between py-1">
+            <span>Subtotal</span>
+            <span>{subTotal}</span>
+          </li>
+          <li className="flex justify-between py-1">
+            <span>Shipping</span>
+            <span>{shippingPrice}</span>
+          </li>
+        </ul>
+        <div className="flex justify-between border-t border-accent-2 py-3 font-bold mb-2">
+          <span>Total</span>
+          <span>{total}</span>
+        </div>
+        <PaymentElement onReady={()=> setLoading(false)}/>
+      </div>
+      {!loading? (
+        <div className="flex-shrink-0 px-6 py-6 sm:px-6 sticky z-20 bottom-0 w-full right-0 left-0 bg-accent-0 border-t text-sm">
           <Button disabled={!stripe} type="submit" width="100%">
             Pay
-          </Button>}
-      </div>
+          </Button>
+        </div>
+      ) : null}
       {/* Show error message to your customers */}
       {errorMessage && <div>{errorMessage}</div>}
     </form>

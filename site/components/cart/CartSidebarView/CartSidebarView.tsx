@@ -14,12 +14,6 @@ const CartSidebarView: FC = () => {
   const { closeSidebar, setSidebarView } = useUI()
   const { data, isLoading, isEmpty } = useCart()
 
-  const { price: subTotal } = usePrice(
-    data && {
-      amount: Number(data.subtotalPrice),
-      currencyCode: data.currency.code,
-    }
-  )
   const { price: total } = usePrice(
     data && {
       amount: Number(data.totalPrice),
@@ -92,21 +86,7 @@ const CartSidebarView: FC = () => {
             </div>
 
             <div className="flex-shrink-0 px-6 py-6 sm:px-6 sticky z-20 bottom-0 w-full right-0 left-0 bg-accent-0 border-t text-sm">
-              <ul className="pb-2">
-                <li className="flex justify-between py-1">
-                  <span>Subtotal</span>
-                  <span>{subTotal}</span>
-                </li>
-                <li className="flex justify-between py-1">
-                  <span>Taxes</span>
-                  <span>Calculated at checkout</span>
-                </li>
-                <li className="flex justify-between py-1">
-                  <span>Shipping</span>
-                  <span className="font-bold tracking-wide">FREE</span>
-                </li>
-              </ul>
-              <div className="flex justify-between border-t border-accent-2 py-3 font-bold mb-2">
+              <div className="flex justify-between py-3 font-bold mb-2">
                 <span>Total</span>
                 <span>{total}</span>
               </div>

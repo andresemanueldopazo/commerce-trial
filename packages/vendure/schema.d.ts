@@ -2971,6 +2971,7 @@ export type CartFragment = { __typename?: 'Order' } & Pick<
   | 'total'
   | 'totalWithTax'
   | 'currencyCode'
+  | 'shippingWithTax'
 > & {
     customer?: Maybe<{ __typename?: 'Customer' } & Pick<Customer, 'id'>>
     lines: Array<
