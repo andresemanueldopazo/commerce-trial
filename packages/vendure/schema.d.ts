@@ -1996,7 +1996,7 @@ export type OrderAddress = {
   customFields?: Maybe<Scalars['JSON']>
 }
 
-export type OrderList = PaginatedList & {
+export type OrderList = {
   __typename?: 'OrderList'
   items: Array<Order>
   totalItems: Scalars['Int']
@@ -3137,7 +3137,7 @@ export type ActiveCustomerQuery = { __typename?: 'Query' } & {
   activeCustomer?: Maybe<
     { __typename?: 'Customer' } & Pick<
       Customer,
-      'id' | 'firstName' | 'lastName' | 'emailAddress'
+      'id' | 'firstName' | 'lastName' | 'emailAddress' | 'orders'
     >
   >
 }
