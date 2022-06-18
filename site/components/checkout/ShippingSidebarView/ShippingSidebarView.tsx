@@ -8,7 +8,7 @@ import useAddAddress from '@framework/customer/address/use-add-item'
 import useSWR from 'swr'
 import { fetcher as fetch } from '@framework/fetcher'
 import { eligibleShippingMethods } from '@framework/utils/queries/eligible-shipping-methods'
-import s from './ShippingView.module.css'
+import s from './ShippingSidebarView.module.css'
 import { setOrderShippingMethod } from '@framework/utils/mutations/set-order-shipping-method'
 
 interface Form extends HTMLFormElement {
@@ -25,7 +25,7 @@ interface Form extends HTMLFormElement {
   country: HTMLSelectElement
 }
 
-const ShippingView: FC = () => {
+const ShippingSidebarView: FC = () => {
   const { setSidebarView, closeSidebar } = useUI()
   const addAddress = useAddAddress()
 
@@ -59,7 +59,7 @@ const ShippingView: FC = () => {
       country: event.target.country.value,
     })
 
-    setSidebarView('CHECKOUT_VIEW')
+    setSidebarView('STRIPE_SIDEBAR_VIEW')
   }
 
   return (
@@ -134,4 +134,4 @@ const ShippingView: FC = () => {
   )
 }
 
-export default ShippingView
+export default ShippingSidebarView

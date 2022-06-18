@@ -21,7 +21,7 @@ const CartSidebarView: FC = () => {
     }
   )
   const handleClose = () => closeSidebar()
-  const goToCheckout = () => setSidebarView('SHIPPING_VIEW')
+  const goToCheckout = () => setSidebarView('SHIPPING_SIDEBAR_VIEW')
 
   const error = null
   const success = null

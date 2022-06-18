@@ -44,7 +44,7 @@ export default function Cart() {
 
   const goToCheckout = () => {
     openSidebar()
-    setSidebarView('CHECKOUT_VIEW')
+    setSidebarView('STRIPE_SIDEBAR_VIEW')
   }
 
   return (

@@ -6,12 +6,12 @@ import { CommerceProvider } from '@framework'
 import LoginView from '@components/auth/LoginView'
 import { useUI } from '@components/ui/context'
 import { Navbar, Footer } from '@components/common'
-import ShippingView from '@components/checkout/ShippingView'
+import ShippingSidebarView from '@components/checkout/ShippingSidebarView'
 import CartSidebarView from '@components/cart/CartSidebarView'
 import { useAcceptCookies } from '@lib/hooks/useAcceptCookies'
 import { Sidebar, Button, LoadingDots } from '@components/ui'
 import PaymentMethodView from '@components/checkout/PaymentMethodView'
-import CheckoutSidebarView from '@components/checkout/CheckoutSidebarView'
+import StripeSidebarView from '@components/checkout/StripeSidebarView'
 import { CheckoutProvider } from '@components/checkout/context'
 import { MenuSidebarView } from '@components/common/UserNav'
 import type { Page } from '@commerce/types/page'
@@ -83,9 +83,9 @@ const SidebarView: React.FC<{
   return (
     <Sidebar onClose={closeSidebar}>
       {sidebarView === 'CART_VIEW' && <CartSidebarView />}
-      {sidebarView === 'SHIPPING_VIEW' && <ShippingView />}
+      {sidebarView === 'SHIPPING_SIDEBAR_VIEW' && <ShippingSidebarView />}
       {sidebarView === 'PAYMENT_VIEW' && <PaymentMethodView />}
-      {sidebarView === 'CHECKOUT_VIEW' && <CheckoutSidebarView />}
+      {sidebarView === 'STRIPE_SIDEBAR_VIEW' && <StripeSidebarView />}
       {sidebarView === 'MOBILE_MENU_VIEW' && <MenuSidebarView links={links} />}
     </Sidebar>
   )
