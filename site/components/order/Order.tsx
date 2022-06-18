@@ -2,13 +2,13 @@ import usePrice from "@framework/product/use-price"
 import OrderItem from "./OrderItem"
 import cn from 'clsx'
 import s from './OrderItem.module.css'
+import { OrderResume } from "@commerce/types/customer"
 
-const Order = ({
-  order,
-  ...rest
-}: {
-  order: any,
-}) => {
+interface OrderProps {
+  order: OrderResume
+}
+
+const Order: React.FC<OrderProps> = ({order}) => {
   const { price: totalPrice } = usePrice({
     amount: order.totalPrice,
     currencyCode: order?.currency.code!,
@@ -22,7 +22,6 @@ const Order = ({
   return (
     <li
       className={cn(s.root)}
-      {...rest}
     >
       <div>
         <div>
