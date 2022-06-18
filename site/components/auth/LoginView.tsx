@@ -1,12 +1,10 @@
 import { useEffect, useState, useCallback } from 'react'
 import { Logo, Button, Input } from '@components/ui'
 import useLogin from '@framework/auth/use-login'
-import useGoogleLogin from '@framework/auth/use-google-login'
 import { useUI } from '@components/ui/context'
 import { validate } from 'email-validator'
-import {useGoogleLogin as useGoogleLoginHook} from 'react-google-login';
-import FacebookLogin, { LoginResponse } from '@greatsumini/react-facebook-login';
-import useFacebookLogin from '@framework/auth/use-facebook-login'
+import FacebookLogin from './FacebookLogin'
+import GoogleLogin from './GoogleLogin'
 
 const LoginView: React.FC = () => {
   // Form State
@@ -19,8 +17,6 @@ const LoginView: React.FC = () => {
   const { setModalView, closeModal } = useUI()
 
   const login = useLogin()
-  const googleLogin = useGoogleLogin()
-  const facebookLogin = useFacebookLogin()
 
   const handleLogin = async (e: React.SyntheticEvent<EventTarget>) => {
     e.preventDefault()
@@ -60,36 +56,6 @@ const LoginView: React.FC = () => {
   useEffect(() => {
     handleValidation()
   }, [handleValidation])
-  
-  const onSuccessGoogleLogin = async (response: any) => {
-    await googleLogin({
-      google: response.tokenId,
-    })
-    closeModal()
-  }
-
-  const onFailureGoogleLogin = async (response: any) => {
-  }
-
-  const {signIn} = useGoogleLoginHook({
-    clientId: "544188497430-sqn1tr00nd4uvthmbqo95trcjjibp8j2.apps.googleusercontent.com",
-    onSuccess: onSuccessGoogleLogin,
-    onFailure: onFailureGoogleLogin,
-    accessType: 'offline',
-    autoLoad: false,
-  })
-
-
-  const handleOnSuccessFacebook = async (response: LoginResponse['authResponse']) => {
-    if (!!response) {
-      await facebookLogin({
-          token: response.accessToken,
-        })
-        closeModal()
-    } else {
-      console.log("Facebook authentication failed!")
-    }
-  }
 
   return (
     <>
@@ -135,36 +101,11 @@ const LoginView: React.FC = () => {
           </div>
         </div>
       </form>
-      <div className="w-80 flex flex-col justify-between p-3">
-        <Button
-          variant="slim"
-          type="submit"
-          loading={loading}
-          disabled={disabled}
-          onClick={signIn}
-          className="flex justify-center p-3"
-        >
-          Log In with Google
-        </Button>
-      </div>
-      <div className="flex justify-center p-3">
-        <FacebookLogin
-          appId="733157791465173"
-          fields="name,email,picture"
-          scope="public_profile,email,user_friends"
-          onSuccess={handleOnSuccessFacebook}
-          onFail={(e: {status: string}) => console.log("FB login failed:", e.status)}
-          style={{
-            backgroundColor: '#4267b2',
-            color: '#fff',
-            fontSize: '16px',
-            padding: '12px 24px',
-            border: 'none',
-            borderRadius: '4px',
-            //backgroundImage: "" if we want the fb icon in the button... how do we make work this out?
-          }}
-        />
-      </div>
+      <GoogleLogin 
+        disabled={disabled}
+        loading={loading}        
+      />
+      <FacebookLogin/>
     </>
   )
 }
