@@ -2,9 +2,7 @@ import { useCallback } from 'react'
 import { MutationHook } from '@vercel/commerce/utils/types'
 import useGoogleLogin, { UseGoogleLogin } from '@vercel/commerce/auth/use-google-login'
 import { GoogleLoginHook } from '../types/google-login'
-import { CommerceError, ValidationError } from '@vercel/commerce/utils/errors'
 import useCustomer from '../customer/use-customer'
-import { LoginMutation, LoginMutationVariables } from '../../schema'
 import { googleLoginMutation } from '../utils/mutations/google-log-in-mutation'
 
 export default useGoogleLogin as UseGoogleLogin<typeof handler>
@@ -25,7 +23,7 @@ export const handler: MutationHook<GoogleLoginHook> = {
       ...options,
       variables,
     })
-    
+
     return null
   },
   useHook:
