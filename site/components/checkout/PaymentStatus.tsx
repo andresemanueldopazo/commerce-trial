@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {useStripe} from '@stripe/react-stripe-js';
+import { useCustomer } from '@framework/customer'
 
 const PaymentStatus = () => {
   const stripe = useStripe();
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState('');
+  const { mutate } = useCustomer()
 
   useEffect(() => {
     if (!stripe) {
@@ -16,10 +18,15 @@ const PaymentStatus = () => {
       'payment_intent_client_secret'
     );
 
+    if (!clientSecret) {
+      console.log(clientSecret)
+      return;
+    }
+
     // Retrieve the PaymentIntent
     stripe
-      .retrievePaymentIntent(clientSecret)
-      .then(({paymentIntent}) => {
+      .retrievePaymentIntent(clientSecret!)
+      .then(async ({paymentIntent}) => {
         // Inspect the PaymentIntent `status` to indicate the status of the payment
         // to your customer.
         //
@@ -27,7 +34,8 @@ const PaymentStatus = () => {
         // confirmation, while others will first enter a `processing` state.
         //
         // [0]: https://stripe.com/docs/payments/payment-methods#payment-notification
-        switch (paymentIntent.status) {
+        await mutate()
+        switch (paymentIntent!.status) {
           case 'succeeded':
             setMessage('Success! Payment received.');
             break;
@@ -50,7 +58,11 @@ const PaymentStatus = () => {
   }, [stripe]);
 
 
-  return message;
+  return (
+    <div>
+      {message}
+    </div>
+  ) 
 };
 
 export default PaymentStatus;

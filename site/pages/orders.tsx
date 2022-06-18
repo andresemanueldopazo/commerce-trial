@@ -6,6 +6,10 @@ import { Container, Text } from '@components/ui'
 import { useCustomer } from '@framework/customer'
 import Order from '@components/order/Order'
 
+import PaymentStatus from '@components/checkout/PaymentStatus'
+import getStripe from '@lib/get-stripejs'
+import { Elements } from '@stripe/react-stripe-js'
+
 export async function getStaticProps({
   preview,
   locale,
@@ -28,6 +32,9 @@ export default function Orders() {
   return (
     <Container className="pt-4">
       <Text variant="pageHeading">My Orders</Text>
+      <Elements stripe={getStripe()}>
+        <PaymentStatus/>
+      </Elements>
       {data && (
         <ul>
           {data!.orders.map((order: any)=>
