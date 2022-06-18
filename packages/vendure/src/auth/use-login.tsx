@@ -46,7 +46,12 @@ export const handler: MutationHook<LoginHook> = {
         async function login(input) {
           const data = await fetch({ input })
           const userData = await mutate()
-          identifyCustomer({...userData, id: userData.email})
+          identifyCustomer({
+            id: userData!.email,
+            firstName: userData!.firstName,
+            lastName: userData!.lastName,
+            email: userData!.email,
+          })
           return data
         },
         [fetch, mutate]
