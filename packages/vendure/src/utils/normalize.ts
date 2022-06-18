@@ -1,6 +1,7 @@
 import { Product } from '@vercel/commerce/types/product'
 import { Cart } from '@vercel/commerce/types/cart'
-import { CartFragment, SearchResultFragment } from '../../schema'
+import { CartFragment, Order, SearchResultFragment } from '../../schema'
+import { OrderResume } from '@vercel/commerce/types/customer'
 
 export function normalizeSearchResult(item: SearchResultFragment): Product {
   return {
@@ -59,5 +60,29 @@ export function normalizeCart(order: CartFragment): Cart {
         requiresShipping: true,
       },
     })),
+  }
+}
+
+export function normalizeOrder(order: Order): OrderResume {
+  return {
+    code: order.code,
+    orderPlacedAt: order.orderPlacedAt,
+    shippingWithTax: order.shippingWithTax,
+    state: order.state,
+    totalPrice: order.totalWithTax / 100,
+    currency: { code: order.currencyCode },
+    lineItems: order.lines?.map((l) => ({
+      id: l.id,
+      quantity: l.quantity,
+      name: l.productVariant.name,
+      variant: {
+        price: l.discountedUnitPriceWithTax / 100,
+        listPrice: l.unitPriceWithTax / 100,
+        image: {
+          url: l.featuredAsset?.preview + '?preset=thumb' || '',
+        },
+      },
+      path: l.productVariant.name,
+    })), 
   }
 }
