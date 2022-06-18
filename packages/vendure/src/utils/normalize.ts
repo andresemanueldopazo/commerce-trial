@@ -67,7 +67,7 @@ export function normalizeOrder(order: Order): OrderResume {
   return {
     code: order.code,
     orderPlacedAt: order.orderPlacedAt,
-    shippingWithTax: order.shippingWithTax,
+    shippingWithTax: order.shippingWithTax/100,
     state: order.state,
     totalPrice: order.totalWithTax / 100,
     currency: { code: order.currencyCode },

@@ -1,14 +1,12 @@
 import usePrice from "@framework/product/use-price"
-import OrderItem from "./OrderItem"
-import cn from 'clsx'
-import s from './OrderItem.module.css'
+import OrderItem from "../OrderItem"
 import { OrderResume } from "@commerce/types/customer"
 
-interface OrderProps {
+interface OrderCardProps {
   order: OrderResume
 }
 
-const Order: React.FC<OrderProps> = ({order}) => {
+const OrderCard: React.FC<OrderCardProps> = ({order, ...rest}) => {
   const { price: totalPrice } = usePrice({
     amount: order.totalPrice,
     currencyCode: order?.currency.code!,
@@ -21,7 +19,7 @@ const Order: React.FC<OrderProps> = ({order}) => {
 
   return (
     <li
-      className={cn(s.root)}
+      {...rest}
     >
       <div>
         <div>
@@ -38,7 +36,7 @@ const Order: React.FC<OrderProps> = ({order}) => {
         </div>
         <div>
           <ul>
-            {order.lineItems.map((item: any) =>
+            {order.lineItems.map((item) =>
               <OrderItem
                 key={item.id}
                 item={item}
@@ -64,4 +62,4 @@ const Order: React.FC<OrderProps> = ({order}) => {
   )
 }
 
-export default Order
+export default OrderCard

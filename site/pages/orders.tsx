@@ -4,7 +4,7 @@ import { Bag } from '@components/icons'
 import { Layout } from '@components/common'
 import { Container, Text } from '@components/ui'
 import { useCustomer } from '@framework/customer'
-import Order from '@components/order/Order'
+import OrderCard from '@components/order/OrderCard'
 
 import PaymentStatus from '@components/checkout/PaymentStatus'
 import getStripe from '@lib/get-stripejs'
@@ -38,7 +38,7 @@ export default function Orders() {
       {data && data.orders.totalItems? (
         <ul>
           {data.orders.items.map((order: any)=>
-            <Order
+            <OrderCard
               key={order.id}
               order={order}
             />

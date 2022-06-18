@@ -1,4 +1,3 @@
-import cn from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import s from '../OrderItem.module.css'
@@ -7,14 +6,12 @@ import usePrice from '@framework/product/use-price'
 
 const placeholderImg = '/product-img-placeholder.svg'
 
-const OrderItem = ({
-  item,
-  currencyCode,
-  ...rest
-}: {
-  item: any,
-  currencyCode: string
-}) => {
+interface OrderItemProps {
+  item: any
+  currencyCode: any
+}
+
+const OrderItem: React.FC<OrderItemProps> = ({item, currencyCode, ...rest}) => {
   const { closeSidebarIfPresent } = useUI()
 
   const { price } = usePrice({
@@ -25,7 +22,6 @@ const OrderItem = ({
 
   return (
     <li
-      className={cn(s.root)}
       {...rest}
     >
       <div className="flex flex-row space-x-4 py-4">

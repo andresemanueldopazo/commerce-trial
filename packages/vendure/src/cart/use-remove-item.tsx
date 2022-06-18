@@ -1,15 +1,9 @@
 import { useCallback } from 'react'
-import {
-  HookFetcherContext,
-  MutationHook,
-  MutationHookContext,
-  SWRHook,
-} from '@vercel/commerce/utils/types'
+import { MutationHook } from '@vercel/commerce/utils/types'
 import useRemoveItem, {
   UseRemoveItem,
 } from '@vercel/commerce/cart/use-remove-item'
 import { CommerceError } from '@vercel/commerce/utils/errors'
-import { Cart } from '@vercel/commerce/types/cart'
 import useCart from './use-cart'
 import {
   RemoveOrderLineMutation,
