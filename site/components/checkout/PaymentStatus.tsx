@@ -1,32 +1,32 @@
-import React, {useState, useEffect} from 'react';
-import {useStripe} from '@stripe/react-stripe-js';
+import React, { useState, useEffect } from 'react'
+import { useStripe } from '@stripe/react-stripe-js'
 import { useCustomer } from '@framework/customer'
 
 const PaymentStatus = () => {
-  const stripe = useStripe();
-  const [message, setMessage] = useState('');
+  const stripe = useStripe()
+  const [message, setMessage] = useState('')
   const { mutate } = useCustomer()
 
   useEffect(() => {
     if (!stripe) {
-      return;
+      return
     }
 
     // Retrieve the "payment_intent_client_secret" query parameter appended to
     // your return_url by Stripe.js
     const clientSecret = new URLSearchParams(window.location.search).get(
       'payment_intent_client_secret'
-    );
+    )
 
     if (!clientSecret) {
       console.log(clientSecret)
-      return;
+      return
     }
 
     // Retrieve the PaymentIntent
     stripe
       .retrievePaymentIntent(clientSecret!)
-      .then(async ({paymentIntent}) => {
+      .then(async ({ paymentIntent }) => {
         // Inspect the PaymentIntent `status` to indicate the status of the payment
         // to your customer.
         //
@@ -37,32 +37,29 @@ const PaymentStatus = () => {
         await mutate()
         switch (paymentIntent!.status) {
           case 'succeeded':
-            setMessage('Success! Payment received.');
-            break;
+            setMessage('Success! Payment received.')
+            break
 
           case 'processing':
-            setMessage("Payment processing. We'll update you when payment is received.");
-            break;
+            setMessage(
+              "Payment processing. We'll update you when payment is received."
+            )
+            break
 
           case 'requires_payment_method':
             // Redirect your user back to your payment page to attempt collecting
             // payment again
-            setMessage('Payment failed. Please try another payment method.');
-            break;
+            setMessage('Payment failed. Please try another payment method.')
+            break
 
           default:
-            setMessage('Something went wrong.');
-            break;
+            setMessage('Something went wrong.')
+            break
         }
-      });
-  }, [stripe]);
+      })
+  }, [stripe])
 
+  return <div>{message}</div>
+}
 
-  return (
-    <div>
-      {message}
-    </div>
-  ) 
-};
-
-export default PaymentStatus;
+export default PaymentStatus

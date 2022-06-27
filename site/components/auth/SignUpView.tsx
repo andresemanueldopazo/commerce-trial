@@ -42,7 +42,7 @@ const SignUpView: FC<Props> = () => {
       closeModal()
     } catch ({ errors }) {
       //setMessage(e.errors[0].message) DOES NOT WORK
-      console.log("Error: ", e)
+      console.log('Error: ', e)
       setLoading(false)
     }
   }

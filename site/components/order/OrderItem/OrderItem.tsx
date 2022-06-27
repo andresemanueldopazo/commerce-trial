@@ -11,7 +11,11 @@ interface OrderItemProps {
   currencyCode: any
 }
 
-const OrderItem: React.FC<OrderItemProps> = ({item, currencyCode, ...rest}) => {
+const OrderItem: React.FC<OrderItemProps> = ({
+  item,
+  currencyCode,
+  ...rest
+}) => {
   const { closeSidebarIfPresent } = useUI()
 
   const { price } = usePrice({
@@ -21,9 +25,7 @@ const OrderItem: React.FC<OrderItemProps> = ({item, currencyCode, ...rest}) => {
   })
 
   return (
-    <li
-      {...rest}
-    >
+    <li {...rest}>
       <div className="flex flex-row space-x-4 py-4">
         <div className="w-16 h-16 bg-violet relative overflow-hidden cursor-pointer z-0">
           <Link href={`/product/${item.path}`}>
@@ -34,7 +36,7 @@ const OrderItem: React.FC<OrderItemProps> = ({item, currencyCode, ...rest}) => {
                 width={150}
                 height={150}
                 src={item.variant.image?.url || placeholderImg}
-                alt={item.variant.image?.altText || "Product Image"}
+                alt={item.variant.image?.altText || 'Product Image'}
                 unoptimized
               />
             </a>
@@ -54,9 +56,7 @@ const OrderItem: React.FC<OrderItemProps> = ({item, currencyCode, ...rest}) => {
         </div>
         <div className="flex flex-col justify-between space-y-2 text-sm">
           <span> {item.quantity} </span>
-          {price &&
-            <span> {price} </span>
-          }
+          {price && <span> {price} </span>}
         </div>
       </div>
     </li>

@@ -37,7 +37,7 @@ const LoginView: React.FC = () => {
       closeModal()
     } catch (e: any) {
       //setMessage(e.errors[0].message) DOES NOT WORK
-      console.log("Error: ", e)
+      console.log('Error: ', e)
       setLoading(false)
       setDisabled(false)
     }
@@ -79,7 +79,11 @@ const LoginView: React.FC = () => {
             </div>
           )}
           <Input type="email" placeholder="Email" onChange={setEmail} />
-          <Input type="password" placeholder="Password" onChange={setPassword} />
+          <Input
+            type="password"
+            placeholder="Password"
+            onChange={setPassword}
+          />
 
           <Button
             variant="slim"
@@ -101,11 +105,8 @@ const LoginView: React.FC = () => {
           </div>
         </div>
       </form>
-      <GoogleLogin 
-        disabled={disabled}
-        loading={loading}        
-      />
-      <FacebookLogin/>
+      <GoogleLogin disabled={disabled} loading={loading} />
+      <FacebookLogin />
     </>
   )
 }

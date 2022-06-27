@@ -5,7 +5,9 @@ import type { FacebookLoginHook } from '../types/facebook-login'
 import type { Provider } from '..'
 
 export type UseFacebookLogin<
-  H extends MutationHook<FacebookLoginHook<any>> = MutationHook<FacebookLoginHook>
+  H extends MutationHook<
+    FacebookLoginHook<any>
+  > = MutationHook<FacebookLoginHook>
 > = ReturnType<H['useHook']>
 
 export const fetcher: HookFetcherFn<FacebookLoginHook> = mutationFetcher

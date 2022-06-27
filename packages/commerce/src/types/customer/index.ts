@@ -2,37 +2,37 @@ export * as Card from './card'
 export * as Address from './address'
 
 export type OrderResume = {
-  code: string;
-  orderPlacedAt: any;
-  shippingWithTax: number;
-  state: string;
-  totalPrice: number;
+  code: string
+  orderPlacedAt: any
+  shippingWithTax: number
+  state: string
+  totalPrice: number
   currency: {
-    code: string;
-  };
+    code: string
+  }
   lineItems: {
-    id: string;
-    quantity: number;
-    name: string;
+    id: string
+    quantity: number
+    name: string
     variant: {
-      price: number;
-      listPrice: number;
+      price: number
+      listPrice: number
       image: {
-          url: string;
-      };
-    };
-    path: string;
-  }[],
+        url: string
+      }
+    }
+    path: string
+  }[]
 }
 
 export type Customer = {
   orders: {
-    items: OrderResume[];
-    totalItems: number;
-  },
-  firstName: string,
-  lastName: string,
-  email: string,
+    items: OrderResume[]
+    totalItems: number
+  }
+  firstName: string
+  lastName: string
+  email: string
 }
 
 export type CustomerTypes = {

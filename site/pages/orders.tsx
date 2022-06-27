@@ -33,16 +33,13 @@ export default function Orders() {
     <Container className="pt-4">
       <Text variant="pageHeading">My Orders</Text>
       <Elements stripe={getStripe()}>
-        <PaymentStatus/>
+        <PaymentStatus />
       </Elements>
-      {data && data.orders.totalItems? (
+      {data && data.orders.totalItems > 0 ? (
         <ul>
-          {data.orders.items.map((order: any)=>
-            <OrderCard
-              key={order.id}
-              order={order}
-            />
-          )}
+          {data.orders.items.map((order: any) => (
+            <OrderCard key={order.id} order={order} />
+          ))}
         </ul>
       ) : (
         <div className="flex-1 p-24 flex flex-col justify-center items-center ">

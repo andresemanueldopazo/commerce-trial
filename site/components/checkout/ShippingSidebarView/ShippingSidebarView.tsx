@@ -30,7 +30,7 @@ const ShippingSidebarView: FC = () => {
   const addAddress = useAddAddress()
 
   const fetcher = async () => {
-      return await fetch({query: eligibleShippingMethods});
+    return await fetch({ query: eligibleShippingMethods })
   }
   const { data, error } = useSWR('/eligibleShippingMethods', fetcher, {
     revalidateOnFocus: false,
@@ -43,7 +43,7 @@ const ShippingSidebarView: FC = () => {
       variables: {
         shippingMethodId: data.eligibleShippingMethods.filter(
           (e: any) => e.name == (event.target.method as any).value
-        )[0].id
+        )[0].id,
       },
     })
 
@@ -73,9 +73,11 @@ const ShippingSidebarView: FC = () => {
             <div className={s.fieldset}>
               <label className={s.label}>Shipping Method</label>
               <select name="method" className={s.select}>
-                {data? (data!.eligibleShippingMethods.map((item: any) => (
-                    <option id={item.id}>{item.name}</option>
-                  ))) : null}
+                {data
+                  ? data!.eligibleShippingMethods.map((item: any) => (
+                      <option id={item.id}>{item.name}</option>
+                    ))
+                  : null}
               </select>
             </div>
             <hr className="border-accent-2 my-6" />

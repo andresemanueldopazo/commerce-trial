@@ -67,7 +67,7 @@ export function normalizeOrder(order: Order): OrderResume {
   return {
     code: order.code,
     orderPlacedAt: order.orderPlacedAt,
-    shippingWithTax: order.shippingWithTax/100,
+    shippingWithTax: order.shippingWithTax / 100,
     state: order.state,
     totalPrice: order.totalWithTax / 100,
     currency: { code: order.currencyCode },
@@ -83,6 +83,6 @@ export function normalizeOrder(order: Order): OrderResume {
         },
       },
       path: l.productVariant.name,
-    })), 
+    })),
   }
 }

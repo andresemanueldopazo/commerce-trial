@@ -18,7 +18,7 @@ export const handler: SWRHook<CustomerHook> = {
       ...options,
     })
     return activeCustomer
-      ? ({
+      ? {
           orders: {
             items: activeCustomer.orders.items.map(normalizeOrder),
             totalItems: activeCustomer.orders.totalItems,
@@ -26,7 +26,7 @@ export const handler: SWRHook<CustomerHook> = {
           firstName: activeCustomer.firstName ?? '',
           lastName: activeCustomer.lastName ?? '',
           email: activeCustomer.emailAddress ?? '',
-        })
+        }
       : null
   },
   useHook:

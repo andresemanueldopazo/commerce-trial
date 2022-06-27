@@ -14,7 +14,7 @@ export async function getStaticProps({
   const siteInfoPromise = commerce.getSiteInfo({ config, preview })
   const { pages } = await pagesPromise
   const { categories } = await siteInfoPromise
-
+  console.log(categories)
   return {
     props: { pages, categories },
   }

@@ -1,5 +1,7 @@
 import { useUI } from '@components/ui/context'
-import FacebookLoginButton, { LoginResponse } from '@greatsumini/react-facebook-login';
+import FacebookLoginButton, {
+  LoginResponse,
+} from '@greatsumini/react-facebook-login'
 import useFacebookLogin from '@framework/auth/use-facebook-login'
 
 const FacebookLogin: React.FC = () => {
@@ -7,14 +9,16 @@ const FacebookLogin: React.FC = () => {
 
   const facebookLogin = useFacebookLogin()
 
-  const handleOnSuccessFacebook = async (response: LoginResponse['authResponse']) => {
+  const handleOnSuccessFacebook = async (
+    response: LoginResponse['authResponse']
+  ) => {
     if (!!response) {
       await facebookLogin({
-          token: response.accessToken,
-        })
-        closeModal()
+        token: response.accessToken,
+      })
+      closeModal()
     } else {
-      console.log("Facebook authentication failed!")
+      console.log('Facebook authentication failed!')
     }
   }
 
@@ -25,7 +29,9 @@ const FacebookLogin: React.FC = () => {
         fields="name,email,picture"
         scope="public_profile,email,user_friends"
         onSuccess={handleOnSuccessFacebook}
-        onFail={(e: {status: string}) => console.log("FB login failed:", e.status)}
+        onFail={(e: { status: string }) =>
+          console.log('FB login failed:', e.status)
+        }
         style={{
           backgroundColor: '#4267b2',
           color: '#fff',

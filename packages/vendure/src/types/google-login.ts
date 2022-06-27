@@ -1,5 +1,8 @@
 import * as Core from '@vercel/commerce/types/login'
-import { GoogleLoginBody, GoogleLoginTypes } from '@vercel/commerce/types/google-login'
+import {
+  GoogleLoginBody,
+  GoogleLoginTypes,
+} from '@vercel/commerce/types/google-login'
 import type { LoginMutationVariables } from '../../schema'
 
 export * from '@vercel/commerce/types/google-login'

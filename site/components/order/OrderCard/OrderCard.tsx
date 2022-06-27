@@ -1,12 +1,12 @@
-import usePrice from "@framework/product/use-price"
-import OrderItem from "../OrderItem"
-import { OrderResume } from "@commerce/types/customer"
+import usePrice from '@framework/product/use-price'
+import OrderItem from '../OrderItem'
+import { OrderResume } from '@commerce/types/customer'
 
 interface OrderCardProps {
   order: OrderResume
 }
 
-const OrderCard: React.FC<OrderCardProps> = ({order, ...rest}) => {
+const OrderCard: React.FC<OrderCardProps> = ({ order, ...rest }) => {
   const { price: totalPrice } = usePrice({
     amount: order.totalPrice,
     currencyCode: order?.currency.code!,
@@ -18,9 +18,7 @@ const OrderCard: React.FC<OrderCardProps> = ({order, ...rest}) => {
   })
 
   return (
-    <li
-      {...rest}
-    >
+    <li {...rest}>
       <div>
         <div>
           <span> Code: </span>
@@ -30,32 +28,28 @@ const OrderCard: React.FC<OrderCardProps> = ({order, ...rest}) => {
           <span> Placed at: </span>
           <span> {order.orderPlacedAt} </span>
         </div>
-        <div> 
+        <div>
           <span> State: </span>
           <span> {order.state} </span>
         </div>
         <div>
           <ul>
-            {order.lineItems.map((item) =>
+            {order.lineItems.map((item) => (
               <OrderItem
                 key={item.id}
                 item={item}
                 currencyCode={order?.currency.code!}
               />
-            )}
+            ))}
           </ul>
         </div>
         <div>
           <span> Shipping price: </span>
-          {totalPrice &&
-            <span> {shippingPrice} </span>
-          }
+          {totalPrice && <span> {shippingPrice} </span>}
         </div>
         <div>
           <span> Total: </span>
-          {totalPrice &&
-            <span> {totalPrice} </span>
-          }
+          {totalPrice && <span> {totalPrice} </span>}
         </div>
       </div>
     </li>

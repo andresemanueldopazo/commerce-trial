@@ -7,7 +7,9 @@ export const activeCustomerQuery = /* GraphQL */ `
       firstName
       lastName
       emailAddress
-      orders(options: { filter: { state: {notIn: ["Cancelled", "AddingItems"]}}}) {
+      orders(
+        options: { filter: { state: { notIn: ["Cancelled", "AddingItems"] } } }
+      ) {
         items {
           id
           code

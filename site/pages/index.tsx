@@ -37,7 +37,9 @@ export async function getStaticProps({
 }
 
 export default function Home({
-  products, categories, brands
+  products,
+  categories,
+  brands,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>

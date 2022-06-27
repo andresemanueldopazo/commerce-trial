@@ -17,7 +17,7 @@ const StripeSidebarView: FC = () => {
     }
   `
   const fetcher = async () => {
-    return await fetch({query});
+    return await fetch({ query })
   }
   const { data, error } = useSWR('/createStripePaymentIntent', fetcher, {
     revalidateOnFocus: false,
@@ -33,8 +33,11 @@ const StripeSidebarView: FC = () => {
           Payment
         </h2>
       </div>
-      {data? (
-        <Elements stripe={getStripe()} options={{clientSecret: data.createStripePaymentIntent}}>
+      {data ? (
+        <Elements
+          stripe={getStripe()}
+          options={{ clientSecret: data.createStripePaymentIntent }}
+        >
           <CheckoutForm />
         </Elements>
       ) : null}

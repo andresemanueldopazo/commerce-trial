@@ -1,6 +1,8 @@
 import { useCallback } from 'react'
 import { MutationHook } from '@vercel/commerce/utils/types'
-import useGoogleLogin, { UseGoogleLogin } from '@vercel/commerce/auth/use-google-login'
+import useGoogleLogin, {
+  UseGoogleLogin,
+} from '@vercel/commerce/auth/use-google-login'
 import { GoogleLoginHook } from '../types/google-login'
 import useCustomer from '../customer/use-customer'
 import { googleLoginMutation } from '../utils/mutations/google-log-in-mutation'
@@ -11,12 +13,9 @@ export const handler: MutationHook<GoogleLoginHook> = {
   fetchOptions: {
     query: googleLoginMutation,
   },
-  async fetcher({ input: {
-      google: token
-  }, options, fetch }) {
-
+  async fetcher({ input: { google: token }, options, fetch }) {
     const variables: any = {
-      token
+      token,
     }
 
     const { googleLogin } = await fetch<any>({

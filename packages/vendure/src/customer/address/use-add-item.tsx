@@ -1,5 +1,5 @@
 import useAddItem, {
-  UseAddItem
+  UseAddItem,
 } from '@vercel/commerce/customer/address/use-add-item'
 import type { AddItemHook } from '@vercel/commerce/types/customer/address'
 import { CommerceError } from '@vercel/commerce/utils/errors'
@@ -11,11 +11,10 @@ import {
   ActiveOrderResult,
   MutationSetOrderShippingAddressArgs,
   Order,
-  SetOrderShippingMethodResult
+  SetOrderShippingMethodResult,
 } from '../../../schema'
 import { setOrderShippingAddress } from '../../utils/mutations/set-order-shipping-address'
 import useAddresses from './use-addresses'
-
 
 export default useAddItem as UseAddItem<typeof handler>
 
@@ -49,8 +48,7 @@ export const handler: MutationHook<AddItemHook> = {
         code: data.errorCode,
         message: data.message,
       })
-    }
-    else {
+    } else {
       throw new Error()
     }
   },

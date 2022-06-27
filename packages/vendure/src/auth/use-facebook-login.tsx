@@ -1,6 +1,8 @@
 import { useCallback } from 'react'
 import { MutationHook } from '@vercel/commerce/utils/types'
-import useFacebookLogin, { UseFacebookLogin } from '@vercel/commerce/auth/use-facebook-login'
+import useFacebookLogin, {
+  UseFacebookLogin,
+} from '@vercel/commerce/auth/use-facebook-login'
 import { FacebookLoginHook } from '../types/facebook-login'
 import useCustomer from '../customer/use-customer'
 import { facebookLoginMutation } from '../utils/mutations/facebook-log-in-mutation'
@@ -11,12 +13,9 @@ export const handler: MutationHook<FacebookLoginHook> = {
   fetchOptions: {
     query: facebookLoginMutation,
   },
-  async fetcher({ input: {
-      token: token
-  }, options, fetch }) {
-
+  async fetcher({ input: { token: token }, options, fetch }) {
     const variables: any = {
-      token
+      token,
     }
 
     const { facebookLogin } = await fetch<any>({

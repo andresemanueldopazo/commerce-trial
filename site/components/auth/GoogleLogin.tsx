@@ -1,14 +1,14 @@
 import { Button } from '@components/ui'
 import useGoogleLogin from '@framework/auth/use-google-login'
 import { useUI } from '@components/ui/context'
-import {useGoogleLogin as useGoogleLoginHook} from 'react-google-login';
+import { useGoogleLogin as useGoogleLoginHook } from 'react-google-login'
 
 interface GoogleLoginProps {
   disabled: boolean
   loading: boolean
 }
 
-const GoogleLogin: React.FC<GoogleLoginProps> = ({disabled, loading}) => {
+const GoogleLogin: React.FC<GoogleLoginProps> = ({ disabled, loading }) => {
   const { closeModal } = useUI()
 
   const googleLogin = useGoogleLogin()
@@ -20,11 +20,11 @@ const GoogleLogin: React.FC<GoogleLoginProps> = ({disabled, loading}) => {
     closeModal()
   }
 
-  const onFailureGoogleLogin = async (response: any) => {
-  }
+  const onFailureGoogleLogin = async (response: any) => {}
 
-  const {signIn} = useGoogleLoginHook({
-    clientId: "544188497430-sqn1tr00nd4uvthmbqo95trcjjibp8j2.apps.googleusercontent.com",
+  const { signIn } = useGoogleLoginHook({
+    clientId:
+      '544188497430-sqn1tr00nd4uvthmbqo95trcjjibp8j2.apps.googleusercontent.com',
     onSuccess: onSuccessGoogleLogin,
     onFailure: onFailureGoogleLogin,
     accessType: 'offline',
@@ -33,16 +33,16 @@ const GoogleLogin: React.FC<GoogleLoginProps> = ({disabled, loading}) => {
 
   return (
     <div className="w-80 flex flex-col justify-between p-3">
-    <Button
+      <Button
         variant="slim"
         type="submit"
         loading={loading}
         disabled={disabled}
         onClick={signIn}
         className="flex justify-center p-3"
-    >
+      >
         Log In with Google
-    </Button>
+      </Button>
     </div>
   )
 }
