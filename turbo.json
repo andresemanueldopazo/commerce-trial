@@ -6,7 +6,7 @@
       "outputs": ["dist/**"]
     },
     "next-commerce#build": {
-      "dependsOn": ["^build", "@vercel/commerce-vendure"],
+      "dependsOn": ["^build"],
       "outputs": [".next/**"]
     },
     "test": {
