@@ -6,7 +6,6 @@ import { CommerceError } from '@vercel/commerce/utils/errors'
 import type { MutationHook } from '@vercel/commerce/utils/types'
 import { useCallback } from 'react'
 import {
-  EligiblePaymentMethodsQuery,
   TransitionOrderToStateResult,
   AddPaymentToOrderResult,
 } from '../../schema'
@@ -34,7 +33,7 @@ export const handler: MutationHook<SubmitCheckoutHook> = {
         message: transitionResponse.message,
       })
     } else {
-      const paymentMethodsResponse = await fetch<EligiblePaymentMethodsQuery>({
+      const paymentMethodsResponse = await fetch({
         ...options,
         query: eligiblePaymentMethods,
       })
